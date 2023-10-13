@@ -3,7 +3,6 @@ package com.mrbysco.jammies.mixin.client;
 import com.mrbysco.jammies.client.DanceHandler;
 import com.mrbysco.jammies.client.JamAnimations;
 import com.mrbysco.jammies.dancing.DancingMob;
-import net.minecraft.client.model.AbstractZombieModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.ModelPart;
