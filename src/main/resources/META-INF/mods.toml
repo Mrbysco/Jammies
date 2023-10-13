@@ -1,0 +1,22 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+issueTrackerURL="https://github.com/Mrbysco/Jammies/issues"
+license="MIT"
+
+[[mods]]
+modId="jammies"
+version="${file.jarVersion}"
+displayName="Jammies"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/jammies"
+authors="Mrbysco, ShyNieke"
+credits="Buuz135 for making Cat Jammies"
+description='''
+Making zombies dance since 2023
+'''
+
+[[dependencies.jammies]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20,1.21)"
+ordering="NONE"
+side="BOTH"
