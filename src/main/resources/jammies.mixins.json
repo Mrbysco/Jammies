@@ -6,9 +6,7 @@
   "refmap": "jammies.refmap.json",
   "target": "@env(DEFAULT)",
   "mixins": [
-    "LivingEntityMixin",
-    "SkeletonMixin",
-    "ZombieMixin"
+    "LivingEntityMixin"
   ],
   "client": [
     "client.AbstractZombieModelMixin",
