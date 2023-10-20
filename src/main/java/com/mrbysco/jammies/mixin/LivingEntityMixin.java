@@ -43,6 +43,7 @@ public abstract class LivingEntityMixin extends Entity {
 				cap.setDancing(false);
 				if (cap.isStarted()) cap.stop();
 				//Sync dancing state to client
+				JammiesNetworking.CHANNEL.send(PacketDistributor.ALL.noArg(), new SyncDancingStateMessage(getId(), DancingCapability.writeNBT(cap)));
 			}
 		}
 	}
