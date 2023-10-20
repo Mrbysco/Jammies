@@ -33,7 +33,7 @@ public class CapabilityHandler {
 	public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
 		LivingEntity livingEntity = event.getEntity();
 		Level level = livingEntity.level();
-		if (level.getGameTime() % 20 == 0) {
+		if (!level.isClientSide && level.getGameTime() % 20 == 0) {
 			IDancingMob cap = livingEntity.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
 			if (cap != null) {
 				if (DetectionUtil.closeToJukebox(livingEntity) && !cap.isDancing()) {

@@ -1,1 +1,1 @@
-* Switch how the dance state is applied to the zombie/skeletons
+* Sync the dance state when leaving range of the jukebox
