@@ -38,8 +38,8 @@ public abstract class LivingEntityMixin extends Entity {
 	public void jammies$aiStep(CallbackInfo ci) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		IDancingMob cap = livingEntity.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
-		if (cap != null) {
-			if (!DetectionUtil.closeToJukebox(livingEntity) && cap.isDancing()) {
+		if (cap != null && cap.isDancing() && livingEntity.tickCount % 20 == 0) {
+			if (!DetectionUtil.closeToJukebox(livingEntity)) {
 				cap.setDancing(false);
 				if (cap.isStarted()) cap.stop();
 				//Sync dancing state to client
