@@ -33,10 +33,10 @@ public class CapabilityHandler {
 	public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
 		LivingEntity livingEntity = event.getEntity();
 		Level level = livingEntity.level();
-		if (!level.isClientSide && level.getGameTime() % 20 == 0) {
+		if (!level.isClientSide && livingEntity.tickCount % 20 == 0) {
 			IDancingMob cap = livingEntity.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
 			if (cap != null) {
-				if (DetectionUtil.closeToJukebox(livingEntity) && !cap.isDancing()) {
+				if (!cap.isDancing() && DetectionUtil.closeToJukebox(livingEntity)) {
 					cap.setDancing(true);
 					//Sync dancing state to client
 					JammiesNetworking.CHANNEL.send(PacketDistributor.ALL.noArg(), new SyncDancingStateMessage(livingEntity.getId(), DancingCapability.writeNBT(cap)));
