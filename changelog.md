@@ -1,1 +1,1 @@
-* Sync the dance state when leaving range of the jukebox
+* Reduce the amount of checking for jukebox proximity
