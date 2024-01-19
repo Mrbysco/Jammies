@@ -1,1 +1,1 @@
-* Reduce the amount of checking for jukebox proximity
+* Initial update to 1.20.4

@@ -1,9 +1,9 @@
 package com.mrbysco.jammies.mixin.client;
 
-import com.mrbysco.jammies.CapabilityHandler;
-import com.mrbysco.jammies.capability.IDancingMob;
+import com.mrbysco.jammies.capability.DancingData;
 import com.mrbysco.jammies.client.DanceHandler;
 import com.mrbysco.jammies.client.JamAnimations;
+import com.mrbysco.jammies.util.DanceUtil;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -24,7 +24,7 @@ public abstract class SkeletonModelMixin<T extends Mob & RangedAttackMob> extend
 			at = @At(value = "HEAD")
 	)
 	public void jammies$setupAnim(T mob, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-		IDancingMob cap = mob.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
+		DancingData cap = DanceUtil.getDancingAttachment(mob);
 		if (cap != null && cap.isDancing()) {
 			//Reset pos
 			head.resetPose();
@@ -41,9 +41,6 @@ public abstract class SkeletonModelMixin<T extends Mob & RangedAttackMob> extend
 			at = @At(value = "TAIL")
 	)
 	public void jammies$setupAnim2(T mob, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-		IDancingMob cap = mob.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
-		if (cap != null && cap.isDancing()) {
-			DanceHandler.animateHumanoidDancing(cap, JamAnimations.SPOOKY, (SkeletonModel) (Object) this, ageInTicks, 1.0F);
-		}
+		DanceHandler.doALittleDance(mob, JamAnimations.SPOOKY, (SkeletonModel) (Object) this, ageInTicks, 1.0F);
 	}
 }

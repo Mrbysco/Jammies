@@ -28,11 +28,11 @@ public class HumanoidKeyframeAnimations {
 				default -> Optional.empty();
 			};
 			List<AnimationChannel> list = entry.getValue();
-			optional.ifPresent((p_232330_) -> {
-				list.forEach((p_288241_) -> {
-					Keyframe[] akeyframe = p_288241_.keyframes();
-					int i = Math.max(0, Mth.binarySearch(0, akeyframe.length, (p_232315_) -> {
-						return f <= akeyframe[p_232315_].timestamp();
+			optional.ifPresent((part) -> {
+				list.forEach((animationChannel) -> {
+					Keyframe[] akeyframe = animationChannel.keyframes();
+					int i = Math.max(0, Mth.binarySearch(0, akeyframe.length, (timestamped) -> {
+						return f <= akeyframe[timestamped].timestamp();
 					}) - 1);
 					int j = Math.min(akeyframe.length - 1, i + 1);
 					Keyframe keyframe = akeyframe[i];
@@ -46,7 +46,7 @@ public class HumanoidKeyframeAnimations {
 					}
 
 					keyframe1.interpolation().apply(animationVecCache, f2, akeyframe, i, j, scale);
-					p_288241_.target().apply(p_232330_, animationVecCache);
+					animationChannel.target().apply(part, animationVecCache);
 				});
 			});
 		}

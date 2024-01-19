@@ -1,23 +1,17 @@
 package com.mrbysco.jammies.capability;
 
-import com.mrbysco.jammies.CapabilityHandler;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.ICapabilitySerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
 import java.util.function.Consumer;
 
-public class DancingCapability implements IDancingMob, ICapabilitySerializable<CompoundTag> {
+public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
 	public long lastTime = Long.MAX_VALUE;
 	public long accumulatedTime;
 	public boolean dancing;
 
-	public DancingCapability(boolean dancing) {
+	public DancingData(boolean dancing) {
 		this.dancing = dancing;
 	}
 
@@ -90,31 +84,17 @@ public class DancingCapability implements IDancingMob, ICapabilitySerializable<C
 
 	@Override
 	public CompoundTag serializeNBT() {
-		return writeNBT(this);
+		CompoundTag tag = new CompoundTag();
+		tag.putBoolean("dancing", this.isDancing());
+		tag.putLong("accumulatedTime", this.getAccumulatedTime());
+		tag.putLong("lastTime", this.getLastTime());
+		return tag;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag nbt) {
-		readNBT(this, nbt);
-	}
-
-	public static CompoundTag writeNBT(IDancingMob instance) {
-		CompoundTag tag = new CompoundTag();
-		tag.putBoolean("dancing", instance.isDancing());
-		tag.putLong("accumulatedTime", instance.getAccumulatedTime());
-		tag.putLong("lastTime", instance.getLastTime());
-		return tag;
-	}
-
-	public static void readNBT(IDancingMob instance, CompoundTag tag) {
-		instance.setDancing(tag.getBoolean("dancing"));
-		instance.setAccumulatedTime(tag.getLong("accumulatedTime"));
-		instance.setLastTime(tag.getLong("lastTime"));
-	}
-
-	@NotNull
-	@Override
-	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		return CapabilityHandler.DANCING_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this));
+		this.setDancing(nbt.getBoolean("dancing"));
+		this.setAccumulatedTime(nbt.getLong("accumulatedTime"));
+		this.setLastTime(nbt.getLong("lastTime"));
 	}
 }

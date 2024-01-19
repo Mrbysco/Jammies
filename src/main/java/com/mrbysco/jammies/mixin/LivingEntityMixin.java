@@ -1,10 +1,8 @@
 package com.mrbysco.jammies.mixin;
 
-import com.mrbysco.jammies.CapabilityHandler;
-import com.mrbysco.jammies.capability.DancingCapability;
-import com.mrbysco.jammies.capability.IDancingMob;
-import com.mrbysco.jammies.network.JammiesNetworking;
-import com.mrbysco.jammies.network.message.SyncDancingStateMessage;
+import com.mrbysco.jammies.capability.DancingData;
+import com.mrbysco.jammies.network.message.SyncDancingStatePayload;
+import com.mrbysco.jammies.util.DanceUtil;
 import com.mrbysco.jammies.util.DetectionUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -26,24 +24,28 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(method = "setRecordPlayingNearby(Lnet/minecraft/core/BlockPos;Z)V", at = @At(value = "HEAD"))
 	public void jammies$setRecordPlayingNearby(BlockPos pos, boolean isPartying, CallbackInfo ci) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-		IDancingMob cap = livingEntity.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
+		DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
 		if (cap != null) {
 			cap.setDancing(isPartying);
+			DanceUtil.saveDancing(livingEntity, cap);
 			//Sync dancing state to client
-			JammiesNetworking.CHANNEL.send(PacketDistributor.ALL.noArg(), new SyncDancingStateMessage(getId(), DancingCapability.writeNBT(cap)));
+			PacketDistributor.ALL.noArg().send(new SyncDancingStatePayload(livingEntity.getId(),
+					cap.isDancing(), cap.getAccumulatedTime(), cap.getLastTime()));
 		}
 	}
 
 	@Inject(method = "aiStep()V", at = @At(value = "HEAD"))
 	public void jammies$aiStep(CallbackInfo ci) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
-		IDancingMob cap = livingEntity.getCapability(CapabilityHandler.DANCING_CAPABILITY).orElse(null);
+		DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
 		if (cap != null && cap.isDancing() && livingEntity.tickCount % 20 == 0) {
 			if (!DetectionUtil.closeToJukebox(livingEntity)) {
 				cap.setDancing(false);
 				if (cap.isStarted()) cap.stop();
+				DanceUtil.saveDancing(livingEntity, cap);
 				//Sync dancing state to client
-				JammiesNetworking.CHANNEL.send(PacketDistributor.ALL.noArg(), new SyncDancingStateMessage(getId(), DancingCapability.writeNBT(cap)));
+				PacketDistributor.ALL.noArg().send(new SyncDancingStatePayload(livingEntity.getId(),
+						cap.isDancing(), cap.getAccumulatedTime(), cap.getLastTime()));
 			}
 		}
 	}
