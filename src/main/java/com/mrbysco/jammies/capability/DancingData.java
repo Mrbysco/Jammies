@@ -1,5 +1,6 @@
 package com.mrbysco.jammies.capability;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.common.util.INBTSerializable;
@@ -83,7 +84,7 @@ public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
 	}
 
 	@Override
-	public CompoundTag serializeNBT() {
+	public CompoundTag serializeNBT(HolderLookup.Provider provider) {
 		CompoundTag tag = new CompoundTag();
 		tag.putBoolean("dancing", this.isDancing());
 		tag.putLong("accumulatedTime", this.getAccumulatedTime());
@@ -92,7 +93,7 @@ public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
 	}
 
 	@Override
-	public void deserializeNBT(CompoundTag nbt) {
+	public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
 		this.setDancing(nbt.getBoolean("dancing"));
 		this.setAccumulatedTime(nbt.getLong("accumulatedTime"));
 		this.setLastTime(nbt.getLong("lastTime"));

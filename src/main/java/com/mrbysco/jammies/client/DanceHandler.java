@@ -12,7 +12,7 @@ public class DanceHandler {
 	private static final Vector3f ANIMATION_VECTOR_CACHE = new Vector3f();
 
 	public static void doALittleDance(LivingEntity livingEntity, AnimationDefinition animationDefinition,
-									  HumanoidModel<? extends LivingEntity> humanoidModel, float ageInTicks, float speed) {
+	                                  HumanoidModel<? extends LivingEntity> humanoidModel, float ageInTicks, float speed) {
 		DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
 		if (cap != null) {
 //			System.out.println(cap.isDancing() + " "  + livingEntity);

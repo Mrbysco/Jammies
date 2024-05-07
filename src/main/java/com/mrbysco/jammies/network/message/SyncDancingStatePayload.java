@@ -1,13 +1,18 @@
 package com.mrbysco.jammies.network.message;
 
 import com.mrbysco.jammies.JammiesMod;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record SyncDancingStatePayload(int entityID, boolean dancing, long accumulatedTime, long lastTime) implements CustomPacketPayload {
-	public static final ResourceLocation ID = new ResourceLocation(JammiesMod.MOD_ID, "sync_dancing");
+public record SyncDancingStatePayload(int entityID, boolean dancing, long accumulatedTime,
+                                      long lastTime) implements CustomPacketPayload {
+	public static final StreamCodec<FriendlyByteBuf, SyncDancingStatePayload> CODEC = CustomPacketPayload.codec(
+			SyncDancingStatePayload::write,
+			SyncDancingStatePayload::new);
+	public static final Type<SyncDancingStatePayload> ID = CustomPacketPayload.createType(new ResourceLocation(JammiesMod.MOD_ID, "sync_dancing").toString());
+
 	public SyncDancingStatePayload(final FriendlyByteBuf packetBuffer) {
 		this(packetBuffer.readInt(), packetBuffer.readBoolean(), packetBuffer.readLong(), packetBuffer.readLong());
 	}
@@ -20,7 +25,7 @@ public record SyncDancingStatePayload(int entityID, boolean dancing, long accumu
 	}
 
 	@Override
-	public ResourceLocation id() {
+	public Type<? extends CustomPacketPayload> type() {
 		return ID;
 	}
 }

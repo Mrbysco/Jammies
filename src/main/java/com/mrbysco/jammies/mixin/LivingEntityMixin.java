@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
 			cap.setDancing(isPartying);
 			DanceUtil.saveDancing(livingEntity, cap);
 			//Sync dancing state to client
-			PacketDistributor.ALL.noArg().send(new SyncDancingStatePayload(livingEntity.getId(),
+			PacketDistributor.sendToAllPlayers(new SyncDancingStatePayload(livingEntity.getId(),
 					cap.isDancing(), cap.getAccumulatedTime(), cap.getLastTime()));
 		}
 	}
@@ -44,7 +44,7 @@ public abstract class LivingEntityMixin extends Entity {
 				if (cap.isStarted()) cap.stop();
 				DanceUtil.saveDancing(livingEntity, cap);
 				//Sync dancing state to client
-				PacketDistributor.ALL.noArg().send(new SyncDancingStatePayload(livingEntity.getId(),
+				PacketDistributor.sendToAllPlayers(new SyncDancingStatePayload(livingEntity.getId(),
 						cap.isDancing(), cap.getAccumulatedTime(), cap.getLastTime()));
 			}
 		}

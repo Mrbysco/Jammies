@@ -1,6 +1,5 @@
 package com.mrbysco.jammies.network.handler;
 
-import com.mrbysco.jammies.JammiesMod;
 import com.mrbysco.jammies.capability.DancingData;
 import com.mrbysco.jammies.client.DanceHandler;
 import com.mrbysco.jammies.network.message.SyncDancingStatePayload;
@@ -10,7 +9,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {
 	private static final ClientPayloadHandler INSTANCE = new ClientPayloadHandler();
@@ -19,8 +18,8 @@ public class ClientPayloadHandler {
 		return INSTANCE;
 	}
 
-	public void handleData(final SyncDancingStatePayload data, final PlayPayloadContext context) {
-		context.workHandler().submitAsync(() -> {
+	public void handleData(final SyncDancingStatePayload data, final IPayloadContext context) {
+		context.enqueueWork(() -> {
 					Minecraft mc = Minecraft.getInstance();
 					if (mc.level == null)
 						return;
@@ -49,7 +48,7 @@ public class ClientPayloadHandler {
 				})
 				.exceptionally(e -> {
 					// Handle exception
-					context.packetHandler().disconnect(Component.translatable("jammies.networking.sync_dancing.failed", e.getMessage()));
+					context.disconnect(Component.translatable("jammies.networking.sync_dancing.failed", e.getMessage()));
 					return null;
 				});
 	}
