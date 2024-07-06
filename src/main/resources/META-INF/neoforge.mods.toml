@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[2,)"
+loaderVersion="[4,)"
 issueTrackerURL="https://github.com/Mrbysco/Jammies/issues"
 license="MIT"
 
@@ -17,7 +17,7 @@ Making zombies dance since 2023
 [[dependencies.jammies]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.20.4,1.21)"
+versionRange="[1.21,1.22)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]

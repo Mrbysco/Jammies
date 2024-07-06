@@ -11,7 +11,7 @@ public record SyncDancingStatePayload(int entityID, boolean dancing, long accumu
 	public static final StreamCodec<FriendlyByteBuf, SyncDancingStatePayload> CODEC = CustomPacketPayload.codec(
 			SyncDancingStatePayload::write,
 			SyncDancingStatePayload::new);
-	public static final Type<SyncDancingStatePayload> ID = CustomPacketPayload.createType(new ResourceLocation(JammiesMod.MOD_ID, "sync_dancing").toString());
+	public static final Type<SyncDancingStatePayload> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(JammiesMod.MOD_ID, "sync_dancing"));
 
 	public SyncDancingStatePayload(final FriendlyByteBuf packetBuffer) {
 		this(packetBuffer.readInt(), packetBuffer.readBoolean(), packetBuffer.readLong(), packetBuffer.readLong());

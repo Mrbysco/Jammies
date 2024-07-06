@@ -22,20 +22,6 @@ public class AttachmentHandler {
 	public static final Supplier<AttachmentType<DancingData>> DANCING = ATTACHMENT_TYPES.register(
 			"jammies_dancing", () -> AttachmentType.serializable(() -> new DancingData(false)).build());
 
-//	public static final EntityCapability<IDancingMob, Void> DANCING_CAPABILITY =
-//			EntityCapability.createVoid(
-//					new ResourceLocation(JammiesMod.MOD_ID, "jammies_dancing"),
-//					IDancingMob.class);
-//
-//	public static void registerCaps(RegisterCapabilitiesEvent event) {
-//		List<EntityType<?>> list = List.of(EntityType.ZOMBIE, EntityType.HUSK, EntityType.DROWNED,
-//				EntityType.ZOMBIE_VILLAGER, EntityType.SKELETON, EntityType.STRAY, EntityType.WITHER_SKELETON);
-//
-//		list.forEach(entityType -> {
-//			event.registerEntity(DANCING_CAPABILITY, entityType, (entity, direction) -> new DancingCapability(false));
-//		});
-//	}
-
 	@SubscribeEvent
 	public void onLivingUpdate(EntityTickEvent.Pre event) {
 		Entity entity = event.getEntity();

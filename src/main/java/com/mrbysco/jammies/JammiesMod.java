@@ -16,7 +16,7 @@ public class JammiesMod {
 	public static final String MOD_ID = "jammies";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public static final TagKey<EntityType<?>> CAN_DANCE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(MOD_ID, "can_dance"));
+	public static final TagKey<EntityType<?>> CAN_DANCE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "can_dance"));
 
 	public JammiesMod(IEventBus eventBus) {
 		eventBus.addListener(JammiesNetworking::setupPackets);
