@@ -94,8 +94,8 @@ public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
 
 	@Override
 	public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-		this.setDancing(nbt.getBoolean("dancing"));
-		this.setAccumulatedTime(nbt.getLong("accumulatedTime"));
-		this.setLastTime(nbt.getLong("lastTime"));
+		this.setDancing(nbt.getBooleanOr("dancing", false));
+		this.setAccumulatedTime(nbt.getLongOr("accumulatedTime", 0));
+		this.setLastTime(nbt.getLongOr("lastTime", 0));
 	}
 }
