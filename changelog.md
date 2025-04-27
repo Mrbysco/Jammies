@@ -1,1 +1,1 @@
-* Initial update to 1.21
+* Fix potential when syncing the dancing state to nearby players
