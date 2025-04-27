@@ -25,7 +25,7 @@ public abstract class LivingEntityMixin extends Entity {
 	public void jammies$setRecordPlayingNearby(BlockPos pos, boolean isPartying, CallbackInfo ci) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
-		if (cap != null) {
+		if (!livingEntity.level().isClientSide && cap != null) {
 			cap.setDancing(isPartying);
 			DanceUtil.saveDancing(livingEntity, cap);
 			//Sync dancing state to client
@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin extends Entity {
 	public void jammies$aiStep(CallbackInfo ci) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
-		if (cap != null && cap.isDancing() && livingEntity.tickCount % 20 == 0) {
+		if (cap != null && cap.isDancing() && !livingEntity.level().isClientSide && livingEntity.tickCount % 20 == 0) {
 			if (!DetectionUtil.closeToJukebox(livingEntity)) {
 				cap.setDancing(false);
 				if (cap.isStarted()) cap.stop();
