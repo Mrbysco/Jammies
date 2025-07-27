@@ -20,7 +20,7 @@ public class AttachmentHandler {
 	public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, JammiesMod.MOD_ID);
 
 	public static final Supplier<AttachmentType<DancingData>> DANCING = ATTACHMENT_TYPES.register(
-			"jammies_dancing", () -> AttachmentType.serializable(() -> new DancingData(false)).build());
+			"jammies_dancing", () -> AttachmentType.builder(() -> new DancingData(false)).serialize(DancingData.CODEC).build());
 
 	@SubscribeEvent
 	public void onLivingUpdate(EntityTickEvent.Pre event) {

@@ -1,19 +1,34 @@
 package com.mrbysco.jammies.capability;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.common.util.INBTSerializable;
 
 import java.util.function.Consumer;
 
-public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
+public class DancingData implements IDancingMob {
+	public static final MapCodec<DancingData> CODEC = RecordCodecBuilder.mapCodec(
+			instance -> instance.group(
+							Codec.BOOL.fieldOf("dancing").forGetter(p_311729_ -> p_311729_.dancing),
+							Codec.LONG.fieldOf("accumulatedTime").forGetter(p_311729_ -> p_311729_.accumulatedTime),
+							Codec.LONG.fieldOf("lastTime").forGetter(p_311729_ -> p_311729_.lastTime)
+					)
+					.apply(instance, DancingData::new)
+	);
+
 	public long lastTime = Long.MAX_VALUE;
 	public long accumulatedTime;
 	public boolean dancing;
 
-	public DancingData(boolean dancing) {
+	public DancingData(boolean dancing, long accumulatedTime, long lastTime) {
 		this.dancing = dancing;
+		this.accumulatedTime = accumulatedTime;
+		this.lastTime = lastTime;
+	}
+
+	public DancingData(boolean dancing) {
+		this(dancing, 0L, Long.MAX_VALUE);
 	}
 
 	public void start(int i) {
@@ -27,9 +42,9 @@ public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
 		}
 	}
 
-	public void animateWhen(boolean p_252220_, int p_249486_) {
-		if (p_252220_) {
-			this.startIfStopped(p_249486_);
+	public void animateWhen(boolean condition, int tickCount) {
+		if (condition) {
+			this.startIfStopped(tickCount);
 		} else {
 			this.stop();
 		}
@@ -81,21 +96,5 @@ public class DancingData implements IDancingMob, INBTSerializable<CompoundTag> {
 	@Override
 	public void setDancing(boolean dancing) {
 		this.dancing = dancing;
-	}
-
-	@Override
-	public CompoundTag serializeNBT(HolderLookup.Provider provider) {
-		CompoundTag tag = new CompoundTag();
-		tag.putBoolean("dancing", this.isDancing());
-		tag.putLong("accumulatedTime", this.getAccumulatedTime());
-		tag.putLong("lastTime", this.getLastTime());
-		return tag;
-	}
-
-	@Override
-	public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-		this.setDancing(nbt.getBooleanOr("dancing", false));
-		this.setAccumulatedTime(nbt.getLongOr("accumulatedTime", 0));
-		this.setLastTime(nbt.getLongOr("lastTime", 0));
 	}
 }
