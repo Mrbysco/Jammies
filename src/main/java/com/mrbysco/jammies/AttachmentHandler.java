@@ -26,7 +26,7 @@ public class AttachmentHandler {
 	public void onLivingUpdate(EntityTickEvent.Pre event) {
 		Entity entity = event.getEntity();
 		Level level = entity.level();
-		if (!level.isClientSide && entity.tickCount % 20 == 0 && entity instanceof LivingEntity livingEntity) {
+		if (!level.isClientSide() && entity.tickCount % 20 == 0 && entity instanceof LivingEntity livingEntity) {
 			DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
 			if (cap != null) {
 				if (!cap.isDancing() && DetectionUtil.closeToJukebox(livingEntity)) {

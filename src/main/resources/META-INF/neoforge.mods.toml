@@ -17,7 +17,7 @@ Making zombies dance since 2023
 [[dependencies.jammies]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.21.7,1.22)"
+versionRange="[1.21.10,1.22)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]

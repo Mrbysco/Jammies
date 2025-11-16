@@ -3,8 +3,8 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.190'
-    id 'net.darkhax.curseforgegradle' version '1.1.26'
+    id 'net.neoforged.gradle.userdev' version '7.1.4'
+    id 'net.darkhax.curseforgegradle' version '1.1.28'
     id 'com.modrinth.minotaur' version "2.+"
 }
 
@@ -78,10 +78,10 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-//    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
-//    compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
-//
-//    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
+
+    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 }
 
 jar {
@@ -155,6 +155,10 @@ if (System.getenv().MODRINTH_KEY) {
 
         }
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
