@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class DanceUtil {
 	public static DancingData getDancingAttachment(Entity entity) {
-		if (entity.getType().is(JammiesMod.CAN_DANCE)) {
+		if (entity.is(JammiesMod.CAN_DANCE)) {
 			return entity.getData(AttachmentHandler.DANCING);
 		}
 		return null;
