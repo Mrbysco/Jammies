@@ -5,8 +5,8 @@ import com.mrbysco.jammies.client.DanceHandler;
 import com.mrbysco.jammies.client.JamAnimations;
 import com.mrbysco.jammies.util.DanceUtil;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.monster.skeleton.SkeletonModel;
 import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +19,7 @@ public abstract class SkeletonModelMixin<S extends SkeletonRenderState> extends 
 		super(modelPart);
 	}
 
-	@Inject(method = "Lnet/minecraft/client/model/SkeletonModel;setupAnim(Lnet/minecraft/client/renderer/entity/state/SkeletonRenderState;)V",
+	@Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/SkeletonRenderState;)V",
 			at = @At(value = "HEAD")
 	)
 	public void jammies$setupAnim(S state, CallbackInfo ci) {

@@ -4,7 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.mrbysco.jammies.network.JammiesNetworking;
 import com.mrbysco.jammies.util.DanceUtil;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.api.distmarker.Dist;
@@ -18,7 +18,7 @@ public class JammiesMod {
 	public static final String MOD_ID = "jammies";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public static final TagKey<EntityType<?>> CAN_DANCE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(MOD_ID, "can_dance"));
+	public static final TagKey<EntityType<?>> CAN_DANCE = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MOD_ID, "can_dance"));
 
 	public JammiesMod(IEventBus eventBus, Dist dist) {
 		eventBus.addListener(JammiesNetworking::setupPackets);

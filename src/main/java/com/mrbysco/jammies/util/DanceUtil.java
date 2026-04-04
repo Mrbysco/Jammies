@@ -6,7 +6,7 @@ import com.mrbysco.jammies.capability.DancingData;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
@@ -29,7 +29,7 @@ public class DanceUtil {
 		entity.setData(AttachmentHandler.DANCING, dancingData);
 	}
 
-	public static final ContextKey<DancingData> DANCING_DATA = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(JammiesMod.MOD_ID, "dancing_data"));
+	public static final ContextKey<DancingData> DANCING_DATA = new ContextKey<>(Identifier.fromNamespaceAndPath(JammiesMod.MOD_ID, "dancing_data"));
 
 	public static void registerCustomRenderData(RegisterRenderStateModifiersEvent event) {
 		event.registerEntityModifier(ZombieRenderer.class, (zombie, renderState) -> {

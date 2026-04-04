@@ -4,7 +4,7 @@ import com.mrbysco.jammies.capability.DancingData;
 import com.mrbysco.jammies.client.DanceHandler;
 import com.mrbysco.jammies.client.JamAnimations;
 import com.mrbysco.jammies.util.DanceUtil;
-import net.minecraft.client.model.AbstractZombieModel;
+import net.minecraft.client.model.monster.zombie.AbstractZombieModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
