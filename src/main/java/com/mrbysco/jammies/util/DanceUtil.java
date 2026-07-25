@@ -9,9 +9,13 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.Entity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import org.jetbrains.annotations.Nullable;
 
+@EventBusSubscriber(Dist.CLIENT)
 public class DanceUtil {
 	public static DancingData getDancingAttachment(Entity entity) {
 		if (entity.is(JammiesMod.CAN_DANCE)) {
@@ -31,6 +35,7 @@ public class DanceUtil {
 
 	public static final ContextKey<DancingData> DANCING_DATA = new ContextKey<>(Identifier.fromNamespaceAndPath(JammiesMod.MOD_ID, "dancing_data"));
 
+	@SubscribeEvent
 	public static void registerCustomRenderData(RegisterRenderStateModifiersEvent event) {
 		event.registerEntityModifier(ZombieRenderer.class, (zombie, renderState) -> {
 			DancingData data = getDancingAttachment(zombie);
