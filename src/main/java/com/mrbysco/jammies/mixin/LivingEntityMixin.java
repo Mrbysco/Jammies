@@ -22,11 +22,11 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	@Inject(method = "setRecordPlayingNearby(Lnet/minecraft/core/BlockPos;Z)V", at = @At(value = "HEAD"))
-	public void jammies$setRecordPlayingNearby(BlockPos pos, boolean isPartying, CallbackInfo ci) {
+	public void jammies$setRecordPlayingNearby(BlockPos jukebox, boolean isPlaying, CallbackInfo ci) {
 		LivingEntity livingEntity = (LivingEntity) (Object) this;
 		DancingData cap = DanceUtil.getDancingAttachment(livingEntity);
 		if (cap != null) {
-			cap.setDancing(isPartying);
+			cap.setDancing(isPlaying);
 			DanceUtil.saveDancing(livingEntity, cap);
 			//Sync dancing state to client
 			PacketDistributor.sendToAllPlayers(new SyncDancingStatePayload(livingEntity.getId(),
